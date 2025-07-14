@@ -15,14 +15,14 @@
     </form>
   </div>
 
-  <!-- ✅ Proper Script block -->
+  <!-- ✅ Script block with updated URL -->
   <script>
     document.getElementById('login-form').addEventListener('submit', function (e) {
       e.preventDefault();
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
 
-      fetch('http://localhost:3000/login', {
+      fetch('https://immorix-backend.onrender.com/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -32,13 +32,12 @@
       .then(res => res.json())
       .then(data => {
         if (data.token) {
-  localStorage.setItem('token', data.token);
-  alert('✅ Login successful!');
-  window.location.href = 'index.html';
-} else {
-  alert(data.error || data.message || '❌ Login failed!');
-}
-
+          localStorage.setItem('token', data.token);
+          alert('✅ Login successful!');
+          window.location.href = 'index.html';
+        } else {
+          alert(data.error || data.message || '❌ Login failed!');
+        }
       })
       .catch(err => {
         console.error('Login error:', err);
