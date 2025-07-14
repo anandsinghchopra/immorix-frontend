@@ -1,0 +1,62 @@
+<!-- 🚫 Redirect to login if not authenticated -->
+<script>
+  if (!localStorage.getItem('token')) {
+    window.location.href = 'login.html';
+  }
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head><link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#ff6600" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Immorix AI</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#ff6600" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    
+    <!-- 📜 Sidebar -->
+    <div id="sidebar">
+      <h3>📜 Chat History</h3>
+      <ul id="chatList"></ul>
+      <button id="newChatBtn">🆕 New Chat</button>
+      <button id="logoutBtn">🚪 Logout</button>
+    </div>
+
+    <!-- 💬 Main Chat Area -->
+    <div id="chatContainer">
+      <header style="text-align: center; position: relative;">
+        <img src="./assets/logo.png.jpg" alt="Immorix Logo" class="logo" />
+        <h2 id="chatTitle">Immorix AI</h2>
+
+        <!-- 🔘 Top Right Controls -->
+        <div style="position: absolute; top: 10px; right: 10px; display: flex; gap: 10px;">
+          <button id="themeToggleBtn">🌓</button>
+          <button id="langToggleBtn">🌐</button>
+        </div>
+      </header>
+
+      <!-- 📊 Stats (Optional) -->
+      <p id="chatStats" style="text-align: center; font-size: 12px; color: gray;"></p>
+
+      <div id="chatBox" class="chat-box"></div>
+
+      <!-- 🔤 Input -->
+      <div class="input-box">
+        <textarea id="userInput" rows="2" placeholder="Type your message..."></textarea>
+        <button id="sendBtn">Send</button>
+        <button id="micBtn">🎤</button>
+        <button id="langToggleBtn">🌐</button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ JS Script -->
+  <script src="script.js"></script>
+</body>
+</html>

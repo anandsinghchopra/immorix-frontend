@@ -1,0 +1,20 @@
+{
+  "name": "Immorix AI",
+  "short_name": "Immorix",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#0d0d0d",
+  "theme_color": "#ff6600",
+  "icons": [
+    {
+      "src": "assets/logo.png.jpg",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/logo.png.jpg",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

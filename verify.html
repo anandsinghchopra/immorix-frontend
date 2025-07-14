@@ -1,0 +1,20 @@
+<input type="text" id="otp" placeholder="Enter OTP" />
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const email = urlParams.get("email");
+
+  async function verify() {
+    const otp = document.getElementById("otp").value;
+    const res = await fetch("http://localhost:3000/verify-otp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, otp })
+    });
+    const data = await res.json();
+    if (data.success) {
+      window.location.href = `reset.html?email=${email}`;
+    } else {
+      alert(data.error);
+    }
+  }
+</script>

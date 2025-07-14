@@ -1,0 +1,31 @@
+<script>
+  const email = localStorage.getItem('resetEmail'); // ✅ Stored in forgot.html
+
+  async function resetPassword() {
+    const otp = document.getElementById("otp").value;
+    const newPassword = document.getElementById("newPassword").value;
+
+    // Step 1: Verify OTP
+    const verify = await fetch('http://localhost:3000/verify-otp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, otp })
+    });
+    const verifyData = await verify.json();
+
+    if (!verify.ok) {
+      alert(verifyData.error);
+      return;
+    }
+
+    // Step 2: Reset Password
+    const res = await fetch("http://localhost:3000/reset-password-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, newPassword })
+    });
+    const data = await res.json();
+    alert(data.message || data.error);
+    if (data.message) window.location.href = "login.html";
+  }
+</script>

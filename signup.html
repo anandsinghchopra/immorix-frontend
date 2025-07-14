@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup - Immorix AI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="auth-container">
+    <h2>📝 Sign Up</h2>
+    <input type="text" id="signupUsername" placeholder="Username" />
+    <input type="password" id="signupPassword" placeholder="Password" />
+    <button onclick="signup()">Create Account</button>
+    <p>Already have an account? <a href="login.html">Login</a></p>
+  </div>
+
+  <script>
+    async function signup() {
+      const username = document.getElementById('signupUsername').value.trim();
+      const password = document.getElementById('signupPassword').value.trim();
+
+      if (!username || !password) {
+        alert('Please fill all fields');
+        return;
+      }
+
+      try {
+        const res = await fetch('http://localhost:3000/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          alert('✅ Signup successful! Please login.');
+          window.location.href = 'login.html';
+        } else {
+          alert('❌ Error: ' + data.message);
+        }
+
+      } catch (err) {
+        alert('❌ Network error: ' + err.message);
+      }
+    }
+  </script>
+</body>
+</html>
