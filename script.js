@@ -9,8 +9,8 @@ const input = document.getElementById("userInput");
 const sendBtn = document.getElementById("sendBtn");
 const micBtn = document.getElementById("micBtn");
 const newChatBtn = document.getElementById("newChatBtn");
-const logoutBtn = document.getElementById("logoutBtn"); // ✅ added
-const chatTitle = document.getElementById("chatTitle"); // ✅ added
+const logoutBtn = document.getElementById("logoutBtn");
+const chatTitle = document.getElementById("chatTitle");
 let currentChatId = null;
 
 // Add message to chat
@@ -51,7 +51,7 @@ async function sendMessage() {
   addTypingIndicator();
 
   try {
-    const res = await fetch("http://localhost:3000/chat", {
+    const res = await fetch("https://immorix-backend.onrender.com/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message })
@@ -84,7 +84,7 @@ async function sendMessage() {
 
 // Save to DB
 async function saveToDB(message, role) {
-  await fetch("http://localhost:3000/api/chat/save", {
+  await fetch("https://immorix-backend.onrender.com/api/chat/save", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -96,7 +96,7 @@ async function saveToDB(message, role) {
 
 // Load all chat list
 async function loadChatList() {
-  const res = await fetch("http://localhost:3000/api/chat/list", {
+  const res = await fetch("https://immorix-backend.onrender.com/api/chat/list", {
     headers: { Authorization: "Bearer " + localStorage.getItem("token") }
   });
   const chats = await res.json();
@@ -106,7 +106,6 @@ async function loadChatList() {
     li.textContent = id;
     li.addEventListener("click", () => loadChatById(id));
 
-    // Extra buttons
     const renameBtn = document.createElement("button");
     renameBtn.textContent = "✏️";
     renameBtn.onclick = (e) => {
@@ -135,7 +134,6 @@ async function loadChatList() {
     li.appendChild(renameBtn);
     li.appendChild(deleteBtn);
     li.appendChild(exportBtn);
-
     chatList.appendChild(li);
   });
 }
@@ -145,7 +143,7 @@ async function loadChatById(chatId) {
   currentChatId = chatId;
   chatBox.innerHTML = "";
   chatTitle.innerText = `Immorix AI – ${chatId}`;
-  const res = await fetch(`http://localhost:3000/api/chat/${chatId}`, {
+  const res = await fetch(`https://immorix-backend.onrender.com/api/chat/${chatId}`, {
     headers: { Authorization: "Bearer " + localStorage.getItem("token") }
   });
   const messages = await res.json();
@@ -156,7 +154,7 @@ async function loadChatById(chatId) {
 
 // Rename Chat
 async function renameChat(oldId, newId) {
-  await fetch("http://localhost:3000/api/chat/rename", {
+  await fetch("https://immorix-backend.onrender.com/api/chat/rename", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -170,7 +168,7 @@ async function renameChat(oldId, newId) {
 
 // Delete Chat
 async function deleteChat(chatId) {
-  await fetch(`http://localhost:3000/api/chat/delete/${chatId}`, {
+  await fetch(`https://immorix-backend.onrender.com/api/chat/delete/${chatId}`, {
     method: "DELETE",
     headers: {
       Authorization: "Bearer " + localStorage.getItem("token")
@@ -182,7 +180,7 @@ async function deleteChat(chatId) {
 
 // Export Chat
 async function exportChat(chatId) {
-  const res = await fetch(`http://localhost:3000/api/chat/${chatId}`, {
+  const res = await fetch(`https://immorix-backend.onrender.com/api/chat/${chatId}`, {
     headers: { Authorization: "Bearer " + localStorage.getItem("token") }
   });
   const messages = await res.json();
@@ -263,6 +261,7 @@ function toggleTheme() {
 window.addEventListener("DOMContentLoaded", () => {
   loadChatList();
 });
+
 const translations = {
   en: {
     send: "Send",
@@ -299,9 +298,3 @@ document.getElementById("langToggleBtn").addEventListener("click", () => {
 });
 
 window.addEventListener("DOMContentLoaded", applyLang);
-// 🌐 PWA Install Registration
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js')
-    .then(() => console.log('✅ Service Worker Registered'))
-    .catch(err => console.error('❌ SW Error:', err));
-}
