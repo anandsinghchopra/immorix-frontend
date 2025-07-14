@@ -17,7 +17,7 @@
       const email = document.getElementById("email").value.trim();
       if (!email) return alert("Enter email");
 
-      const res = await fetch("http://localhost:3000/send-otp", {
+      const res = await fetch("https://immorix-backend.onrender.com/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email })
